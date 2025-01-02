@@ -1,6 +1,121 @@
 {% extends "base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock %}
 
 {% block content %}
-    <h2>Общая статистика по профессии C# разработчик</h2>
-    <p>Зарплата миллион рублей</p>
+<h2>Общая статистика по вакансиям C#</h2>
+
+<!-- Динамика уровня зарплат по годам -->
+<h3>Динамика уровня зарплат по годам</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Год</th>
+            <th>Средняя зарплата (руб.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for year, salary in data.salary_trend.items %}
+        <tr>
+            <td>{{ year }}</td>
+            <td>{{ salary | floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Динамика количества вакансий по годам -->
+<h3>Динамика количества вакансий по годам</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Год</th>
+            <th>Количество вакансий</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for year, count in data.vacancy_trend.items %}
+        <tr>
+            <td>{{ year }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Уровень зарплат по городам -->
+<h3>Уровень зарплат по городам</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Город</th>
+            <th>Средняя зарплата (руб.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city, salary in data.salary_by_city.items %}
+        <tr>
+            <td>{{ city }}</td>
+            <td>{{ salary | floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Доля вакансий по городам -->
+<h3>Доля вакансий по городам</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Город</th>
+            <th>Доля вакансий (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city, share in data.vacancy_share_by_city.items %}
+        <tr>
+            <td>{{ city }}</td>
+            <td>{{ share | floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- ТОП-20 навыков по годам -->
+<h3>ТОП-20 навыков по годам</h3>
+{% for year, skills in data.top_skills.items %}
+<h4>Год: {{ year }}</h4>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Навык</th>
+            <th>Частота</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for skill, count in skills.items %}
+            <tr>
+                <td>{{ skill }}</td>
+                <td>{{ count }}</td>
+            </tr>   
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+
+<h3>Динамика уровня зарплат по годам</h3>
+    <img src="{% static 'graphics/salary_trend.png' %}" alt="Динамика уровня зарплат по годам">
+
+<h3>Динамика количества вакансий по годам</h3>
+    <img src="{% static 'graphics/vacancy_trend.png' %}" alt="Динамика количества вакансий по годам">
+
+<h3>Уровень зарплат по городам</h3>
+    <img src="{% static 'graphics/salary_by_city.png' %}" alt="Уровень зарплат по городам">
+
+<h3>Доля вакансий по городам</h3>
+    <img src="{% static 'graphics/vacancy_share_by_city.png' %}" alt="Доля вакансий по городам">
+
 {% endblock %}
+    
