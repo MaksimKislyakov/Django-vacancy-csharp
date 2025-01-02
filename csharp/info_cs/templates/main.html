@@ -9,6 +9,7 @@
 
 <!-- Динамика уровня зарплат по годам -->
 <h3>Динамика уровня зарплат по годам</h3>
+<img src="{% static 'graphics/salary_trend.png' %}" alt="Динамика уровня зарплат по годам">
 <table border="1">
     <thead>
         <tr>
@@ -28,6 +29,7 @@
 
 <!-- Динамика количества вакансий по годам -->
 <h3>Динамика количества вакансий по годам</h3>
+<img src="{% static 'graphics/vacancy_trend.png' %}" alt="Динамика количества вакансий по годам">
 <table border="1">
     <thead>
         <tr>
@@ -47,6 +49,7 @@
 
 <!-- Уровень зарплат по городам -->
 <h3>Уровень зарплат по городам</h3>
+<img src="{% static 'graphics/salary_by_city.png' %}" alt="Уровень зарплат по городам">
 <table border="1">
     <thead>
         <tr>
@@ -66,6 +69,7 @@
 
 <!-- Доля вакансий по городам -->
 <h3>Доля вакансий по городам</h3>
+<img src="{% static 'graphics/vacancy_share_by_city.png' %}" alt="Доля вакансий по городам">
 <table border="1">
     <thead>
         <tr>
@@ -104,18 +108,7 @@
     </tbody>
 </table>
 {% endfor %}
-
-<h3>Динамика уровня зарплат по годам</h3>
-    <img src="{% static 'graphics/salary_trend.png' %}" alt="Динамика уровня зарплат по годам">
-
-<h3>Динамика количества вакансий по годам</h3>
-    <img src="{% static 'graphics/vacancy_trend.png' %}" alt="Динамика количества вакансий по годам">
-
-<h3>Уровень зарплат по городам</h3>
-    <img src="{% static 'graphics/salary_by_city.png' %}" alt="Уровень зарплат по городам">
-
-<h3>Доля вакансий по городам</h3>
-    <img src="{% static 'graphics/vacancy_share_by_city.png' %}" alt="Доля вакансий по городам">
+    
 
 {% endblock %}
     

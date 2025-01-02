@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import json
 import matplotlib.pyplot as plt
-import os
+import re
 
 PARSING_FILE = 'vacancies_2024.csv'
 OUTPUT_FILE = 'scriptsJson/main.json'
@@ -98,7 +98,8 @@ def process_data():
     def extract_skills(key_skills):
         if pd.isna(key_skills):
             return []
-        return [skill.strip() for skill in key_skills.split(',')]
+        # Разделение навыков по запятой и новой строке
+        return [skill.strip() for skill in re.split(r',|\n', key_skills) if skill.strip()]
 
     all_csharp_vacancies['skills'] = all_csharp_vacancies['key_skills'].apply(extract_skills)
     skill_trends = {}
@@ -111,6 +112,8 @@ def process_data():
     # Сохранение в JSON
     with open('main.json', 'w', encoding='utf-8') as f:
         json.dump(stats, f, ensure_ascii=False, indent=4)
+
+# process_data()
 
 # Представление Django
 def main(request):
