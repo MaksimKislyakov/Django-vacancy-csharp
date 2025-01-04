@@ -24,15 +24,17 @@
         </nav>
     </header>
     <main>
-        <dev align="center">
-            <aside style="width: 100px;">
+        <div align="left">
+            <aside style="width: 200px;">
                 <ul>
-                    <li><a href="templates/all_vac.html">сайт</a></li>
-                    <li><a href="templates/demand_stat.html">сайт</a></li>
-                    <li><a href="templates/testBase.html">сайт</a></li>
+                    <li><a href="http://127.0.0.1:8000">Главная страница</a></li>
+                    <li><a href="general_stat">Общая статистика</a></li>
+                    <li><a href="demand_stat">Востребованность</a></li>
+                    <li><a href="area_name_stat">География</a></li>
+                    <li><a href="skills_top_stat">Навыки</a></li>
                 </ul>
             </aside>
-        </dev>
+        </div>
         {% block content %}
         {% endblock %}
     </main>

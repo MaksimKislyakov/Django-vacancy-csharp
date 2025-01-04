@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Востребованность по вакансиям C#</h2>
+<h3>Динамика уровня зарплат по годам</h3>
+<img src="{% static 'graphics/csharp/salary_trend.png' %}" alt="Динамика уровня зарплат по годам" widht='1800' height='400'>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Год</th>
+            <th>Средняя зарплата (руб.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for year, salary in data.salary_trend.items %}
+            <tr>
+                <td>{{ year }}</td>
+                <td>{{ salary | floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Динамика количества вакансий по годам -->
+<h3>Динамика количества вакансий по годам</h3>
+<img src="{% static 'graphics/csharp/vacancy_trend.png' %}" alt="Динамика количества вакансий по годам" widht='1800' height='400'>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Год</th>
+            <th>Количество вакансий</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for year, count in data.vacancy_trend.items %}
+        <tr>
+            <td>{{ year }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+<h2>ТОП-20 ключевых навыков по годам с вакансиями C#</h2>
+<!-- ТОП-20 навыков по годам -->
+<h3>ТОП-20 навыков по годам</h3>
+{% for year, skills in data.top_skills.items %}
+    {% if skills %}
+        <h4>Год: {{ year }}</h4>
+        <img src="{% static 'graphics/csharp/skills_top_20_in_' %}{{ year }}.png" alt="ТОП-20 навыков в {{ year }}" widht='1800' height='400'>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Навык</th>
+                    <th>Частота</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for skill, count in skills.items %}
+                        <tr>
+                            <td>{{ skill }}</td>
+                            <td>{{ count }}</td>
+                        </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

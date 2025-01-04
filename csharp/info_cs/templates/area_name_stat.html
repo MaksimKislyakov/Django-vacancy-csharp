@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+<h2>География по вакансиям C#</h2>
+<h3>Уровень зарплат по городам</h3>
+<img src="{% static 'graphics/csharp/salary_by_city.png' %}" alt="Уровень зарплат по городам" widht='1800' height='400'>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Город</th>
+            <th>Средняя зарплата (руб.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city, salary in data.salary_by_city.items %}
+        <tr>
+            <td>{{ city }}</td>
+            <td>{{ salary | floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Доля вакансий по городам -->
+<h3>Доля вакансий по городам</h3>
+<img src="{% static 'graphics/csharp/vacancy_share_by_city.png' %}" alt="Доля вакансий по городам" widht='1800' height='400'>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Город</th>
+            <th>Доля вакансий (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city, share in data.vacancy_share_by_city.items %}
+        <tr>
+            <td>{{ city }}</td>
+            <td>{{ share | floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
