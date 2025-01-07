@@ -7,18 +7,20 @@
     <title>hh по C#</title>
     <link rel="icon" href="{% static 'graphics/logo/csharp.ico' %}" type="image/icon type">
     <link rel="stylesheet" href="{% static 'graphics/css/style.css' %}">
-    {% block style %}
-    {% endblock %}
+    <style>
+        {% block style %}
+        {% endblock %}
+    </style>
 </head>
 <body> 
     <div class="layout">
         <header>  
-            <img src="{% static 'graphics/logo/csharp.ico' %}" width="100" height="100" alt="logo">
-            <h1>HeadHunter по C#</h1>
+            <a href="http://127.0.0.1:8000" ><img src="{% static 'graphics/logo/csharp.ico' %}" width="100" height="100" alt="logo"></a>
+            <h1 style="margin-left: 110px; font-size: 40px;"><a href="http://127.0.0.1:8000" style="text-decoration: none; color: white">HeadHunter по C#</a></h1>
         </header> 
         <div class="main-layout">
             <aside class="sidebar">
-                <ul>
+                <ul style="margin: 0">
                     <li><a href="http://127.0.0.1:8000">Главная страница</a></li>
                     <li><a href="{% url 'general_stat' %}">Общая статистика</a></li>
                     <li><a href="{% url 'demand_stat' %}">Востребованность</a></li>

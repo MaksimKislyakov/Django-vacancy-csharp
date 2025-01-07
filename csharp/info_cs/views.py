@@ -68,6 +68,12 @@ def fetch_vacancies():
             'area': details.get('area', {}).get('name', 'Не указано'),
             'published_at': details.get('published_at', 'Не указано')
         })
+    
+    detailed_vacancies.sort(
+        key=lambda x: datetime.fromisoformat(x['published_at']),
+        reverse=True 
+    )
+
     return detailed_vacancies
 
 def format_salary(salary):

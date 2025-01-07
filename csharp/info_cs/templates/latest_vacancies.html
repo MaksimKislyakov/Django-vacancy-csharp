@@ -1,17 +1,43 @@
 {% extends "base.html" %}
 
+{% block style %}
+    .gen_con{
+        background-color: #dbdbdb;
+        padding: 30px;
+        margin-bottom: 50px;
+    }
+
+    .gen_con h3{
+        margin: 30px 30px 30px 30px;
+        font-size: 26px;
+    }
+
+    .gen_con p{
+        text-indent: 50px;
+        margin: 10px 10px 10px 10px;
+        font-size: 20px;
+    }
+
+    .gen_con strong{
+        font-size: 23px; 
+        margin-left: 10px;
+    }
+{% endblock %}
+
 {% block content %}
-    <h2>Последние вакансии</h2>
+    <h2 style="text-align: center; font-size: 30px">Последние вакансии</h2>
     <ul>
         {% for vacancy in vacancies %}
-            <li>
-                <h3>{{ vacancy.name }}</h3>
-                <p><strong>Описание:</strong> {{ vacancy.description }}</p>
-                <p><strong>Навыки:</strong> {{ vacancy.skills }}</p>
-                <p><strong>Компания:</strong> {{ vacancy.company }}</p>
-                <p><strong>Оклад:</strong> {{ vacancy.salary }}</p>
-                <p><strong>Регион:</strong> {{ vacancy.area }}</p>
-                <p><strong>Дата публикации:</strong> {{ vacancy.published_at }}</p>
+            <li style="list-style: none;">
+                <div class='gen_con'>
+                    <h3>{{ vacancy.name }}</h3>
+                    <strong style="">Описание:</strong><p> {{ vacancy.description }}</p>
+                    <strong>Навыки:</strong><p> {{ vacancy.skills }}</p>
+                    <strong>Компания:</strong><p> {{ vacancy.company }}</p>
+                    <strong>Оклад:</strong><p> {{ vacancy.salary }}</p>
+                    <strong>Регион:</strong><p> {{ vacancy.area }}</p>
+                    <strong>Дата публикации:</strong><p> {{ vacancy.published_at }}</p>
+                </div>
             </li>
         {% endfor %}
     </ul>
