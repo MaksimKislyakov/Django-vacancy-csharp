@@ -1,45 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hh по C#</title>
-    <style>
-        footer {
-            background-color: #FFDAB9;
-            height: 50px;
-            width: 100%;
-            align: left;
-            padding: 10px 10px 25px 20px;
-        }
-    </style>
+    <link rel="icon" href="{% static 'graphics/logo/csharp.ico' %}" type="image/icon type">
+    <link rel="stylesheet" href="{% static 'graphics/css/style.css' %}">
     {% block style %}
     {% endblock %}
 </head>
-<body>
-    <header>        
-        <nav>
-            <img src="#" width="100" height="100">
+<body> 
+    <div class="layout">
+        <header>  
+            <img src="{% static 'graphics/logo/csharp.ico' %}" width="100" height="100" alt="logo">
             <h1>HeadHunter по C#</h1>
-        </nav>
-    </header>
-    <main>
-        <div align="left">
-            <aside style="width: 200px;">
+        </header> 
+        <div class="main-layout">
+            <aside class="sidebar">
                 <ul>
                     <li><a href="http://127.0.0.1:8000">Главная страница</a></li>
-                    <li><a href="general_stat">Общая статистика</a></li>
-                    <li><a href="demand_stat">Востребованность</a></li>
-                    <li><a href="area_name_stat">География</a></li>
-                    <li><a href="skills_top_stat">Навыки</a></li>
+                    <li><a href="{% url 'general_stat' %}">Общая статистика</a></li>
+                    <li><a href="{% url 'demand_stat' %}">Востребованность</a></li>
+                    <li><a href="{% url 'area_name_stat' %}">География</a></li>
+                    <li><a href="{% url 'skills_top_stat' %}">Навыки</a></li>   
+                    <li><a href="{% url 'latest_vacancies' %}">Последние вакансии</a></li>
                 </ul>
             </aside>
+            <main class="content">
+                {% block content %}{% endblock %}
+            </main>
         </div>
-        {% block content %}
-        {% endblock %}
-    </main>
-    <footer>
-        <p>Кисляков Максим Вячеславович.<br> Академическая группа РИ-230936</p>
-    </footer>
+        <footer>
+            <p>Кисляков Максим Вячеславович.<br> Академическая группа РИ-230936</p>
+        </footer>
+    </div>
 </body>
 </html>

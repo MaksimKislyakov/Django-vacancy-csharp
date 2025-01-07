@@ -6,4 +6,3 @@ class Vacancy(models.Model):
     salary = models.PositiveIntegerField()
     experience = models.PositiveIntegerField()
     company_name = models.CharField(max_length=200)
-    

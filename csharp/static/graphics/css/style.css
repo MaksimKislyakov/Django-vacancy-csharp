@@ -1,0 +1,120 @@
+/* Сброс */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Общий стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Вертикальное размещение элементов header, main и footer */
+    overflow: hidden;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header img {
+    margin-right: 20px;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+/* Основное содержимое */
+.main-layout {
+    display: flex;
+    flex: 1; /* Контейнер займет всё доступное пространство */
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    height: 100%;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+/* Контентная часть */
+.content {
+    flex: 1; /* Контент занимает всё оставшееся пространство */
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+/* Таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Адаптивная версия для мобильных устройств */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column; /* Sidebar и контент друг под другом */
+    }
+
+    .sidebar {
+        width: 100%; /* Sidebar растягивается на всю ширину */
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}

@@ -3,6 +3,44 @@ import numpy as np
 import json
 import matplotlib.pyplot as plt
 import re
+import requests
+import pandas as pd
+import xml.etree.ElementTree as ET
+
+def get_all_currency():
+    month = 1
+    year = 2003
+    all_currency = 'BYR,USD,EUR,KZT,UAH,AZN,KGS,UZS,GEL'.split(',')
+    len_cur = len(all_currency)
+    result = {}
+    while True:
+        if year == 2024 and month == 12:
+            break
+        month_str = str(month)
+        if month < 10:
+            month_str = '0' + month_str
+        try:
+          response = requests.get(f'https://cbr.ru/scripts/XML_daily.asp?date_req=01/{month_str}/{year}')
+          result[f'{year}-{month_str}'] = {}
+          root = ET.fromstring(response.content)
+          for item in root.findall('Valute'):
+              name = item.find('CharCode').text
+              try:
+                  index = all_currency.index(name) + 1
+                  result[f'{year}-{month_str}'][name] = float(item.find('VunitRate').text.replace(',', '.'))
+              except ValueError:
+                  continue
+        except Exception:
+            continue
+        if month == 12:
+            month = 1
+            year += 1
+        else:
+            month += 1
+    return result
+
+# Получаем курсы валют из Центрального банка России
+EXCHANGE_RATES = get_all_currency()
 
 PARSING_FILE = 'vacancies_2024.csv'
 #json для профессии
@@ -11,15 +49,13 @@ OUTPUT_FILE_NEED_VAC = 'scriptsJson/csharp_stat.json'
 #json для общей статистики
 OUTPUT_FILE_GENGERAL = 'scriptsJson/general.json'
 
-# Курсы валют по месяцам
-EXCHANGE_RATES = {
-    '2010-08': {'BYR': 0.0101434, 'USD': 30.1869, 'EUR': 39.4694, 'KZT': 0.204352, 'UAH': 3.82316, 'AZN': 37.5646, 'KGS': 0.647093, 'UZS': 0.0188016},
-}
-
 # Ограничение на зарплату
 MAX_SALARY = 10000000
 
+KEYWORDS = ['c#', 'c sharp', 'шарп']
+
 # Функция для сохранения графиков в формате png картинок
+
 def save_plot(data, title, ylabel, xlabel, filename):
     plt.figure(figsize=(10, 6))
     if isinstance(data, dict):
@@ -44,7 +80,10 @@ def process_data_need_vac():
         chunk['published_month'] = chunk['published_at'].dt.tz_localize(None).dt.to_period('M')
 
         # Фильтрация по C#
-        chunk = chunk.loc[chunk['name'].str.contains(r'C#', case=False, na=False)]
+        pattern_csharp = r'|'.join([re.escape(keyword) for keyword in KEYWORDS])
+
+        # Фильтрация строк
+        csharp = chunk.loc[chunk['name'].str.contains(pattern_csharp, case=False, na=False)]
 
         # Преобразование зарплаты в рубли
         def convert_salary(row):
@@ -60,10 +99,10 @@ def process_data_need_vac():
 
             return None
 
-        chunk.loc[:, 'salary_rub'] = chunk.apply(convert_salary, axis=1)
+        csharp.loc[:, 'salary_rub'] = csharp.apply(convert_salary, axis=1)
 
         # Добавляем в общий список
-        all_vac.append(chunk)
+        all_vac.append(csharp)
 
     # Объединение всех подходящих данных
     all_vac_concat = pd.concat(all_vac)
@@ -117,18 +156,8 @@ def process_data_need_vac():
         save_plot(skill, 'ТОП-20 навыков по годам', 'Навык', 'Количество навыков', f'skills_top_20_in_{year}.png')
 
     # Сохранение в JSON
-    # with open('main.json', 'w', encoding='utf-8') as f:
-    #     json.dump(stats, f, ensure_ascii=False, indent=4)
-
-process_data_need_vac()
-
-
-# ------------------------------------------------------------------------------------------------------------------------
-
-EXCHANGE_RATES = {
-    '2010-08': {'BYR': 0.0101434, 'USD': 30.1869, 'EUR': 39.4694, 'KZT': 0.204352, 'UAH': 3.82316, 'AZN': 37.5646, 'KGS': 0.647093, 'UZS': 0.0188016},
-}
-
+    with open('main.json', 'w', encoding='utf-8') as f:
+        json.dump(stats, f, ensure_ascii=False, indent=4)
 
 
 def process_all_vacancies():
@@ -201,8 +230,9 @@ def process_all_vacancies():
         save_plot(skills, f'ТОП-20 навыков за {year}', 'Навык', 'Количество упоминаний', f'top_skills_{year}_g.png')
 
     # Сохранение в json файл
-    # with open('general.json', 'w', encoding='utf-8') as f:
-    #     json.dump(stats, f, ensure_ascii=False, indent=4)
+    with open('general.json', 'w', encoding='utf-8') as f:
+        json.dump(stats, f, ensure_ascii=False, indent=4)
 
+process_data_need_vac()
 process_all_vacancies()
 
